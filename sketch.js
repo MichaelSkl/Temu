@@ -1,3 +1,5 @@
+modalOn = false;
+let linkButton;
 let spinning = false;
 let ruletka;
 let pointer;
@@ -24,7 +26,7 @@ function draw() {
   translate(width/2, height/2-10);
   
   //CTA
-  image(cta, 0, ctaYposRelative , cta.width/2.5, cta.height/2.5);
+  image(cta, 0, ctaYposRelative , cta.width/2.5,       cta.height/2.5);
   
   //Kreciolek
   if (spinning) {
@@ -45,28 +47,52 @@ function draw() {
    //Navbar
   image(navbar, 0, -20, 960, 500);
   
-  //console.log(spin);
-  
-  if (spin >= 12.055) {
   //Modal
-  image(modal, 0, 0, modal.width/2, modal.height/2)
-  }
+  if (spin >= 12.055) {
+    modalOn = true;
+    background("#0000002B")
+    image(modal, 0, 0, modal.width/2.5, modal.height/2.5);
+    }
 }
+// Koniec draw()
 
-function mouseClicked() {
+ function mouseClicked() {
   console.log("click detected success");
-  // Check if mouse is over the CTA area
+   
+  //Zmienne dla CTA 
   let ctaX = width/2;
   let ctaY = height/2-10+ctaYposRelative;
-  
+
   let ctaHeight = cta.height/2.5;
   let ctaWidth = cta.width/2.5;
+    
+  //Zmienne dla Modal
+  let modalX = width/2;
+  let modalY = height/2;
+
+  let modalWidth = modal.width/2.5;  
+  let modalHeight = modal.height/2.5;
   
-  if (mouseX < ctaX + ctaWidth/2 &&
-     mouseX > ctaX - ctaWidth/2 &&
-     mouseY < ctaY + ctaHeight/2 &&
-     mouseY > ctaY - ctaHeight/2) {
-    spinning = true;
-    console.log("Spin initiated!");
-  }
+  if (
+    //CTA click
+      modalOn === false &&
+      mouseX < ctaX + ctaWidth/2 &&
+      mouseX > ctaX - ctaWidth/2 &&
+      mouseY < ctaY + ctaHeight/2 &&
+      mouseY > ctaY - ctaHeight/2) 
+    {
+      spinning = true;
+      console.log("Spin initiated!");
+    } else if (
+    //Modal click
+    modalOn === true &&
+    mouseX < modalX + modalWidth/2 &&
+    mouseX > modalX - modalWidth/2 &&
+    mouseY < modalY + modalHeight/2 &&
+    mouseY > modalY - modalHeight/2) 
+    
+    {
+      console.log("click detected modal");
+      window.open("https://michaelskl.github.io/Temu-2/");
+    }
 }
